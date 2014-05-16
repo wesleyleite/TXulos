@@ -233,12 +233,6 @@ __invoque_hub()
         "${sType}" == "$(echo ${sType} | grep '^$')" ] && return 0
 
     case ${sType^^} in
-        DEFINE)
-            ## definition of scope 
-            # exemple   define www.telapreta.com.br
-            echo
-            # deve ser seguid de define end
-            ;;
         SET)
             __invoque_set "${sParam}" "${sStore}"
             __check_headshot "${sParam} ${sStore}"
