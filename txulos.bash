@@ -102,7 +102,7 @@ __organizer()
             [ "${sVariable:0:1}" != '?' ] && sVariable="?${sVariable}"
             sUrl="${sTarget}${sVariable}"
             sOptions="${sOptions}"
-            echo " ${sOptions} ${sUrl}" > ${fTmpScript}
+            echo "${cWGET} -q -O -  ${sOptions} ${sUrl}" > ${fTmpScript}
             ;;
     esac
 }
@@ -118,14 +118,14 @@ __run()
     }
 
     __organizer
-    [ ${sOperationMode} == 1 ] &&
-    {
+    #[ ${sOperationMode} == 1 ] &&
+    #{
         chmod +x ${fTmpScript}
         ${fTmpScript} | ${sFilter}
-    } || {
-        WGETPARAM=$(cat ${fTmpScript})
-        ${WGETPARAM} | ${sFilter}
-    }
+    #} || {
+    #    WGETPARAM=$(cat ${fTmpScript})
+    #    ${WGETPARAM} | ${sFilter}
+    #}
 }
 
 __invoque_show()
@@ -361,5 +361,4 @@ __invoque_hub()
 # remove cookie and tmp script
 [ -e "${sCookie}" ] &&
     rm ${sCookie} ${fTmpScript}
-
 
