@@ -4,6 +4,7 @@ Version="0.0.1"
 # control variable
 sOperationMode=""
 iLineCount=""
+cWGET=$(which wget)
 #
 sUrl=""
 sOptions=""
@@ -12,10 +13,22 @@ fFileName="$1"
 sTarget=""
 sVariable=""
 sMethod="${sMethod:-GET}"
-sCookie=""
-sUserAgent=""
+sCookie="$(mktemp)"
+sUserAgent="(TXulos/0.0.1)"
 sWgetOptions=""
-sFilter=""
+sFilter="tee"
+
+# temporari script
+fTmpScript=$(mktemp)
+
+
+# load extension
+#[ ! -z "${TXULOS_EXTENSION}" -a \
+#    -d "${TXULOS_EXTENSION}" ] &&
+#    for file in $( ls -1 ${TXULOS_EXTENSION}/ )
+#    do
+#        source ${TXULOS_EXTENSION}/${file}
+#    done
 
 __invoque_set()
 {
@@ -68,10 +81,10 @@ __invoque_unset()
 
 __organizer()
 {
-    sOptions=" --cookie='on' --save-cookies='${sCookie}' --load-cookies='${sCookie}' --keep-session-cookies "
+    sOptions="--cookie=on --save-cookies=${sCookie} --load-cookies=${sCookie} --keep-session-cookies"
 
     [ ! -z "${sUserAgent}" ] &&
-        sOptions="${sOptions} --user-agent=${sUserAgent} "
+        sOptions="${sOptions} --user-agent='"${sUserAgent}"' "
     [ ! -z "${sWgetOptions}" ] &&
         sOptions="${sOptions} ${sWgetOptions}"
 
@@ -83,30 +96,36 @@ __organizer()
                 "${sVariable}" != '&' ] && sVariable="${sVariable}&"
 
             sUrl="${sTarget}"
-            sOptions="--post-data='${sVariable}' ${sOptions}"
+            echo "${cWGET} -q -O - --post-data='"${sVariable}"' ${sOptions} ${sUrl} " > ${fTmpScript}
             ;;
         GET)
             [ "${sVariable:0:1}" != '?' ] && sVariable="?${sVariable}"
             sUrl="${sTarget}${sVariable}"
             sOptions="${sOptions}"
+            echo " ${sOptions} ${sUrl}" > ${fTmpScript}
             ;;
     esac
 }
 
 __run()
 {
+    local WGETPARAM
+
     [ -z "${sTarget}" -o\
-        -z "${sMethod} " ] && {
+        -z "${sMethod}" ] && {
         echo "Headshot : target or method not set"
         return 1
     }
-    [ -f "${sCookie}" ] ||
-        sCookie=$(mktemp)
 
     __organizer
-    [ -z "${sFilter}" ] &&
-        wget -q -O - ${sOptions} "${sUrl}" ||
-            wget -q -O - ${sOptions} "${sUrl}" | ${sFilter}
+    [ ${sOperationMode} == 1 ] &&
+    {
+        chmod +x ${fTmpScript}
+        ${fTmpScript} | ${sFilter}
+    } || {
+        WGETPARAM=$(cat ${fTmpScript})
+        ${WGETPARAM} | ${sFilter}
+    }
 }
 
 __invoque_show()
@@ -137,20 +156,21 @@ __invoque_history()
 
 __attack_var()
 {
-    local sAttackParam="$1"
-    local sAttackVar="$2"
+    local sAttackVar="$( echo $1 | sed 's/\]/\\]/; s/\[/\\[/')"
     local sVariablePreserver="${sVariable}"
     local sAttackString=""
     local sVarExistInVariable=""
 
     sVarExistInVariable=$(echo ${sVariable} |
                                     tr \& \\n |
-                                    grep -E "^${sAttackVar}" )
+                                    cut -d \= -f1 |
+                                    grep  "^${sAttackVar}$" )
+
+    echo "${sVarExistInVariable} - ${sAttackVar}"
 
     [ -z "${sVarExistInVariable}" -o\
         -z "${sAttackVar}" ] &&
             return 1
-
     while read -e -p "__ ${sAttackVar} >> " sAttackString
     do
 
@@ -184,7 +204,10 @@ __check_headshot()
     local sHandler="$1"
     [ $? -eq 1 ] && {
         echo "Headshot ${iLineCount} : ${sHandler}"
-        [ ${sOperationMode} -eq 0 ] && exit
+        [ ${sOperationMode} -eq 0 ] && {
+            echo "Headshot ${sHandler}"
+            exit
+        }
     }
 }
 
@@ -211,6 +234,8 @@ __help()
     echo "       > unset all"
     echo " - show"
     echo "       > show"
+    echo " - import"
+    echo "      > import source.sqi"
     echo " - run"
     echo "      > run"
     echo " - history         <clean>"
@@ -255,11 +280,17 @@ __invoque_hub()
                 __invoque_history "${sParam}"
             ;;
         ATTACK)
-            __attack_var "${sParam}" "${sStore}"
+            __attack_var "${sParam}"
             __check_headshot "${sParam} ${sStore}"
             ;;
         QUIT)
             exit
+            ;;
+        IMPORT)
+            while read line
+            do
+                __invoque_hub "${line}"
+            done < "${sParam}"
             ;;
         *)
             echo -e "Headshot ${iLineCount} : ${sType}"
@@ -302,6 +333,7 @@ __invoque_hub()
                 'show'\
                 'run'\
                 'unset'\
+                'import'\
                 'help'\
                 'history')
     OIFIS=$IFS
@@ -326,7 +358,8 @@ __invoque_hub()
     done
 }
 
-# remove cookie
+# remove cookie and tmp script
 [ -e "${sCookie}" ] &&
-    rm ${sCookie}
+    rm ${sCookie} ${fTmpScript}
+
 
