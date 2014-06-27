@@ -24,10 +24,11 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   run
   ```
   ou
-  
+  ```Bash
   $ txulos 
   TXulos 0.0.1
   help for more information
   >>> 
+  ```
 
 
