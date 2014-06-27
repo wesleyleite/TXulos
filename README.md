@@ -8,6 +8,8 @@ micro script para automatizar alguns testes.
 Uma brincadeira, é para ser divertido e implementar alguma coisa.
 
 ## exemplo de script
+  file: login.sqi
+
   ```Bash
   #!/bin/txulos
   # COMMENT:
@@ -16,6 +18,11 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   set var username=wesleyleite&password=1234
   set method POST
   run
+  ```
+  file: logged.sqi
+  ```Bash
+  #!/bin/txulo
+  import login.sqi
   # COMMENT:
   # após login pagina pode ser navegada
   set target http://www.exemplo.com.br/
@@ -23,6 +30,9 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   set var id=1
   run
   ```
+  $ chmod +x logged.sqi
+  $ ./logged.sqi
+
   ou
   ```Bash
   $ txulos 
