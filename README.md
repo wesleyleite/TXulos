@@ -30,8 +30,11 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   set var id=1
   run
   ```
+
+  ```Bash
   $ chmod +x logged.sqi
   $ ./logged.sqi
+  ```
 
   ou
   ```Bash
