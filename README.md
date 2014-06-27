@@ -8,7 +8,7 @@ micro script para automatizar alguns testes.
 Uma brincadeira, é para ser divertido e implementar alguma coisa.
 
 ## exemplo de script
-
+  ```Bash
   #!/bin/txulos
   # COMMENT:
   # iniciando processo de login na pagina
@@ -22,7 +22,7 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   set method GET
   set var id=1
   run
-
+  ```
   ou
   
   $ txulos 
