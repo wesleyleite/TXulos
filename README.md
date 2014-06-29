@@ -83,22 +83,22 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
 ### HELP
   ```Bash
   >>> help
-   - set target      <host>
+   - set target <host>
          > set target http://www.example.com
-   - set var         <variable>
+   - set var <variable>
          > set var &username=xulos&password=1234&
-   - set method      <method>
+   - set method <method>
          > set method POST
    - set wgetoptions <options>
          > set wgetoptions -T 30
    - set useragent   <user-agent-string>
          > set useragent Mozilla/5.0
-   - set filter      <filter-output-data>
+   - set filter <filter-output-data>
          > set filter html2text
          > set filter grep -Ewo '[a-f0-9]+'
-   - attack      <variables>
+   - attack <variables>
          > attack username
-   - unset           <var-name|all>
+   - unset <var-name|all>
          > unset var username
       remove variable username OR clean all
          > unset all
@@ -108,7 +108,7 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
          > import source.sqi
    - run
          > run
-   - history         <clean>
+   - history <clean>
          > history
          > history clean
    - quit
