@@ -53,7 +53,8 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
 
   Seja criativo.
   É bem menos que um construtor para wget, mas, tem me ajudado em algumas tarefas de teste de aplicações web,
-  principalmente quando necessito logar para testar uma váriavel ou um ajax.
+  principalmente quando necessito logar para testar uma váriavel ou um ajax, pincipalmente quando uma falha
+  encontrada vai necessitar ser submetida a testes após correção.
 
   ```Bash
   $ txulos
@@ -78,4 +79,37 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   __ id >> quit
   >>>
   ```
+
+### HELP
+  ```Bash
+  >>> help
+   - set target      <host>
+         > set target http://www.example.com
+   - set var         <variable>
+         > set var &username=xulos&password=1234&
+   - set method      <method>
+         > set method POST
+   - set wgetoptions <options>
+         > set wgetoptions -T 30
+   - set useragent   <user-agent-string>
+         > set useragent Mozilla/5.0
+   - set filter      <filter-output-data>
+         > set filter html2text
+         > set filter grep -Ewo '[a-f0-9]+'
+   - attack      <variables>
+         > attack username
+   - unset           <var-name|all>
+         > unset var username
+      remove variable username OR clean all
+         > unset all
+   - show
+         > show
+   - import
+         > import source.sqi
+   - run
+         > run
+   - history         <clean>
+         > history
+         > history clean
+   - quit```
 
