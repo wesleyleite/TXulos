@@ -111,5 +111,6 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
    - history         <clean>
          > history
          > history clean
-   - quit```
+   - quit
+   ```
 
