@@ -21,7 +21,7 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   ```
   file: logged.sqi
   ```Bash
-  #!/bin/txulo
+  #!/bin/txulos
   import login.sqi
   # COMMENT:
   # após login pagina pode ser navegada
