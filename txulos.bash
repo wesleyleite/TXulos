@@ -17,6 +17,7 @@ sCookie="$(mktemp)"
 sUserAgent="(TXulos/0.0.1)"
 sWgetOptions=""
 sFilter="tee"
+sDataType=""
 
 # temporari script
 fTmpScript=$(mktemp)
@@ -55,6 +56,11 @@ __invoque_set()
             filter)
                 sFilter="${sString}"
                 ;;
+            datatype)
+                [ "${sString^^}" == 'JSON' ]
+                sDataType="${sString}"
+                sWgetOptions="${sWgetOptions} --header 'Content-Type: application/json' -S"
+                ;;
             *)
                 return 1
                 ;;
@@ -91,12 +97,21 @@ __organizer()
     case ${sMethod^^} in
         POST)
             [ "${sVariable:0:1}" != '&' -a \
-                "${sVariable}" != '&'  ] && sVariable="&${sVariable}"
+                "${sVariable}" != '&'  -a \
+                "${sDataType}" != 'JSON' ] && sVariable="&${sVariable}"
             [ "${sVariable:$((${#sVariable}-1)):${#sVariable}}" != "&" -a \
-                "${sVariable}" != '&' ] && sVariable="${sVariable}&"
+                "${sVariable}" != '&' -a \
+                "${sDataType}" != 'JSON' ] && sVariable="${sVariable}&"
 
             sUrl="${sTarget}"
-            echo "${cWGET} -q -O - --post-data='"${sVariable}"' ${sOptions} ${sUrl} " > ${fTmpScript}
+
+            [ "${sDataType}" == 'JSON' ] && {
+                sVariable="$(echo "${sVariable}" | sed 's/"/\\"/g; s/,/\\,/g;')"
+                echo "${cWGET} -q -O - --post-data "${sVariable}" ${sOptions} ${sUrl} " > ${fTmpScript}
+            } || {
+
+               echo "${cWGET} -q -O - --post-data='"${sVariable}"' ${sOptions} ${sUrl} " > ${fTmpScript}
+            }
             ;;
         GET)
             [ "${sVariable:0:1}" != '?' ] && sVariable="?${sVariable}"
@@ -137,6 +152,7 @@ __invoque_show()
     echo "  wgetOptions: ${sWgetOptions}"
     echo "  User-Agent : ${sUserAgent}"
     echo "  Filter     : ${sFilter}"
+    echo "  Data Type  : ${sDataType}"
     echo
 }
 
