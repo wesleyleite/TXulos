@@ -1,14 +1,25 @@
 TXulos
 ======
 
-micro script para automatizar alguns testes.
+micro declarative script to automate tests
 
-## O que é?
+## What is it?
 
-Uma brincadeira, é para ser divertido e implementar alguma coisa.
+Is not a tool, it is a fun because Shell Script is fun.
+
+I always dreamed to create a programming language, but,
+never had a purpose or thought it would be advantageous
+to someone or to me, when I began the implementation of
+scripts txulos realized it would be possible to do
+something close to it, an interpreter of options for
+formatting commands to wget.
+
+## How do i use?
+Using your favorite editor, you can write simple script
+as follows
 
 ### exemplo de script
-  file: login.sqi
+  file: login.tx
 
   ```Bash
   #!/bin/txulos
@@ -19,10 +30,10 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   set method POST
   run
   ```
-  file: logged.sqi
+  file: logged.tx
   ```Bash
   #!/bin/txulos
-  import login.sqi
+  import login.tx
   # COMMENT:
   # após login pagina pode ser navegada
   set target http://www.exemplo.com.br/
@@ -33,12 +44,16 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   run
   ```
 
+### How do i run?
+On the shell console
   ```Bash
-  $ chmod +x logged.sqi
-  $ ./logged.sqi
+  $ chmod +x logged.tx
+  $ ./logged.tx
   ```
 
-  ou
+### Interactive mode
+if you prefer can run in interactive mode, on the console.
+
   ```Bash
   $ txulos
   TXulos 0.0.1
@@ -47,37 +62,6 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
   >>> set method GET
   >>> set filter grep -E ([0-9a-fA-F]+){32}
   >>> run
-  ```
-
-### ainda não entendeu?
-
-  Seja criativo.
-  É bem menos que um construtor para wget, mas, tem me ajudado em algumas tarefas de teste de aplicações web,
-  principalmente quando necessito logar para testar uma váriavel ou um ajax, pincipalmente quando uma falha
-  encontrada vai necessitar ser submetida a testes após correção.
-
-  ```Bash
-  $ txulos
-  ...
-  >>> import login.sqi
-  >>> show
-
-    Target     : http://www.exemplo.com/index.php
-    Var        : username=wesleyleite&password=1234
-    Method     : POST
-    wgetOptions:
-    User-Agent : (TXulos/0.0.1)
-    Filter     : tee
-
-  >>> set method GET
-  >>> set var id=1&content=webapp-abcde&admin=1
-  >>> attack id
-  __ id >> +3389=(XXXXX)
-  # result  dados são enviados ao rodar o enter.
-  # dados originais da variavel sao preservados, de modo que, pode continuar tentando
-  # ate obter resultado satisfatório ou desistir.
-  __ id >> quit
-  >>>
   ```
 
 ### HELP
@@ -105,7 +89,7 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
    - show
          > show
    - import
-         > import source.sqi
+         > import source.tx
    - run
          > run
    - history <clean>
@@ -114,3 +98,22 @@ Uma brincadeira, é para ser divertido e implementar alguma coisa.
    - quit
    ```
 
+## Contributing
+    User the branch develop to working
+
+    ```BASH
+     $ git clone https://github.com/wesleyleite/TXulos.git
+     $ cd TXulos
+     $ git checkout develop
+     ```
+
+    tips and bugs please open an issue.
+    new feature please open issue.
+
+    if there is a question for finished work, please inform on
+    the commit the issue number.
+
+    example
+    ```BASH
+    $ git commit -a -m 'hotfix get param issue#102'
+    ```
