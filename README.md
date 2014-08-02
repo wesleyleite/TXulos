@@ -110,7 +110,7 @@ if you prefer can run in interactive mode, on the console.
      $ git clone https://github.com/wesleyleite/TXulos.git
      $ cd TXulos
      $ git checkout develop
-     ```
+    ```
 
     tips and bugs please open an issue.
     new feature please open issue.
@@ -122,3 +122,4 @@ if you prefer can run in interactive mode, on the console.
     ```Bash
     $ git commit -a -m 'hotfix get param issue#102'
     ```
+
