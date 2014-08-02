@@ -106,11 +106,9 @@ if you prefer can run in interactive mode, on the console.
 ## Contributing
     User the branch develop to working
 
-    ```Bash
-     $ git clone https://github.com/wesleyleite/TXulos.git
-     $ cd TXulos
-     $ git checkout develop
-    ```
+    $ git clone https://github.com/wesleyleite/TXulos.git
+    $ cd TXulos
+    $ git checkout develop
 
     tips and bugs please open an issue.
     new feature please open issue.
@@ -119,7 +117,6 @@ if you prefer can run in interactive mode, on the console.
     the commit the issue number.
 
     example
-    ```Bash
+
     $ git commit -a -m 'hotfix get param issue#102'
-    ```
 
