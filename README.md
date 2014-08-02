@@ -19,30 +19,35 @@ Using your favorite editor, you can write simple script
 as follows
 
 ### exemplo de script
+  this is an example implementation of a login mechanism,
+  this can run alone or be part of something bigger as i show below.
+
   file: login.tx
 
   ```Bash
   #!/bin/txulos
   # COMMENT:
-  # iniciando processo de login na pagina
+  # start login process
   set target http://www.exemplo.com.br/index.php
   set var username=wesleyleite&password=1234
   set method POST
   run
   ```
+
   file: logged.tx
   ```Bash
   #!/bin/txulos
+  # import file, full path may be required
   import login.tx
-  # COMMENT:
-  # após login pagina pode ser navegada
   set target http://www.exemplo.com.br/
   set method GET
-  # ainda existe a possibilidade de adicionar um filtro
-  # para extrair informacoes pertinentes
   set filter grep '([0-9a-f]){32}'
   run
   ```
+  after importing the login module, the same will run
+  automatically, if successful a cookie will be stored
+  in tmp, allowing navigation system, the propouse is to
+  reuse.
 
 ### How do i run?
 On the shell console
