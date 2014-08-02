@@ -101,7 +101,7 @@ if you prefer can run in interactive mode, on the console.
 ## Contributing
     User the branch develop to working
 
-    ```BASH
+    ```Bash
      $ git clone https://github.com/wesleyleite/TXulos.git
      $ cd TXulos
      $ git checkout develop
@@ -114,6 +114,6 @@ if you prefer can run in interactive mode, on the console.
     the commit the issue number.
 
     example
-    ```BASH
+    ```Bash
     $ git commit -a -m 'hotfix get param issue#102'
     ```
